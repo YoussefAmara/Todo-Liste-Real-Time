@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Real-time Todolist</title>
+        <style>
+            a {text-decoration: none; color: red;}
+            ul li {display: block;}
+        </style>
+    </head>
+
+    <body>
+        <h1>Real-time Todolist </h1>
+
+        <form action="" method="post" id="formulaire_todo">
+            <p>
+                <label for="newtodo">Que dois-je faire ?</label>
+                <input type="text" name="newtodo" id="todo" autofocus />
+                <input type="submit" id="envoi_message" value="Envoyer" />
+            </p>
+        </form>
+
+        <hr>
+
+        <ul id="ul">
+
+        </ul>
+
+
+
+
+        <script src="jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+
+            var socket = io();
+
+            socket.on('RefrechTodo', function(todolist) {
+                  $('#ul').empty();
+                  todolist.forEach(function(todo, i) {
+                      insert(todo, i);
+                  });
+              });
+
+
+
+            $('#formulaire_todo').submit(function ()
+             {
+                 var todo = $('#todo').val();
+                 socket.emit('newTodo', todo);
+                 insert(todo, i);
+                 $('#todo').val('').focus();
+                 return false;
+             });
+
+             socket.on('newTodo', function(data) {
+                  insert(data.todo, data.i);
+              });
+
+
+              function insert(todo, i)
+              {
+                  $('#ul').append('<li><a class="deleteTodo" href="#" data-index="' + i + '">✘ delete </a> ' + todo  + '</li>');
+              }
+
+              $('body').on('click', '.deleteTodo', function()
+              {
+                  console.log($(this).data('index'));
+                  socket.emit('deleteTodo', $(this).data('index'));
+              });
+
+
+        </script>
+    </body>
+</html>

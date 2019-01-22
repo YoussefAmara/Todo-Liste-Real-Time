@@ -1,0 +1,19 @@
+{
+  "name": "todo-liste",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "~4.11.0",
+    "ejs": "~2.1.4",
+    "cookie-session": "~1.1.0",
+    "body-parser": "~1.10.1",
+    "socket.io": "~1.2.1",
+    "ent": "~0.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "youssef amara <youssefamara611@email.com>",
+  "description": "",
+  "license": "ISC"
+}
